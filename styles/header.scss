@@ -1,0 +1,12 @@
+@import 'config';
+
+header {
+  grid-area: header;
+  grid-column: span $columns;
+  text-align: center;
+  width: 100%;
+  background-color: $color-background-secondary;
+  padding: $spacing;
+  margin: 0 auto;
+  border-bottom: 4px solid $color-border-with-background;
+}

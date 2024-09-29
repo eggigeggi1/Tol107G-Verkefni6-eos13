@@ -1,0 +1,375 @@
+@import 'config';
+@import 'header';
+@import 'footer';
+@import 'cards';
+
+/* Reiknum stærð á öllum boxum sem border-box */
+
+html {
+  box-sizing: border-box;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  background-color: $color-background-primary;
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  
+  &::before,
+  &::after {
+    box-sizing: inherit;
+  }
+}
+  
+/* hjálpar class sem felur sjónrænt en skjálesarar lesa */
+  
+.sr-only:not(:focus, :active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+  
+/*** Leturgerðir sem við sækjum úr fonts/ möppu ***/
+  
+@font-face {
+  font-family: Matemasie-regular;
+  src: url('fonts/Matemasie-Regular.ttf') format('truetype');
+}
+  
+@font-face {
+  font-family: 'Open Sans';
+  src: url('fonts/static/OpenSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+  
+@font-face {
+  font-family: 'Open Sans';
+  src: url('fonts/static/OpenSans-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+  
+/*** Allt meginmál notar open sans ***/
+  
+input,
+select,
+button {
+  font-family: $font-family-base;
+}
+  
+/*** Allar fyrirsagnir nota Matemasie regular ***/
+  
+h1,
+h2,
+h3,
+legend {
+  font-family: $font-family-heading;
+}
+  
+/** Lætur myndir aldrei taka meira pláss en foreldri skilgreinir **/
+  
+img {
+  max-width: 100%;
+}
+  
+/** Litur á hlekkjum erfist frá foreldri **/
+  
+a {
+  color: inherit;
+}
+  
+/** „Til baka á forsíðu“ hlekkur **/
+  
+.back {
+  margin-top: $spacing;
+}
+  
+/** Almennt takka útlit, getur virkað á bæði <a> og <button> **/
+  
+.button {
+  display: flex;
+  padding: calc($spacing * 0.5) calc($spacing * 0.9);
+  background-color: $color-background-secondary;
+  border-radius: $border-radius-regular;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  border: $border-regular;
+  transition: background-color $transition-time-short $transition-timing-function, color $transition-time-short $transition-timing-function;
+  
+  &:hover {
+    background-color: $color-black;
+    color: $color-background-secondary;
+    transition: background-color $transition-time-short $transition-timing-function, color $transition-time-short $transition-timing-function;
+  }
+}
+  
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+  
+/* Fade in animation */
+  
+.fade-in {
+  opacity: 0;
+  animation: fade-in $transition-time-long forwards;
+}
+  
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  
+  to {
+    opacity: 1;
+  }
+}
+  
+/* Til að transition sé ekki frá hvítum */
+  
+.wrapper {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(var(--columns), 1fr);
+  justify-items: center;
+  gap: $vertical-space;
+  width: 100%;
+  min-height: 100vh;
+  background-color: $color-background-primary;
+  grid-template-areas:
+    'header'
+    'nav'
+    'main'
+    'foot';
+}
+  
+@media (width >= 1000px) {
+  .wrapper {
+    grid-template-areas:
+      'header header'
+      'nav    main'
+      'foot    foot';
+    grid-template-rows: minmax(0, auto) minmax(60vh, auto) minmax(0, auto);
+    grid-template-columns: 2fr 10fr;
+  
+    nav {
+      grid-area: nav;
+      grid-column: 1 / span 2;
+      grid-row: span 10;
+      width: 100%;
+  
+      li {
+        display: block;
+      }
+  
+      ul {
+        text-align: left;
+      }
+    }
+  
+    > .content-wrapper > section {
+      grid-column: span 10;
+      width: 100%;
+      padding: 1rem;
+    }
+  }
+}
+
+/** Valmynd **/
+  
+/* TODO nota úr sýnilausn eða þinni lausn, ætti að einfaldast töluvert ef
+  .wrapper er notað eins og stungið upp á að ofan */
+  
+nav {
+  grid-area: nav;
+  grid-column: 1 / -1;
+  grid-row: auto;
+  width: 100%;
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  
+  li {
+    padding: 0.3rem;
+    display: inline;
+  }
+  
+  strong a {
+    text-decoration: none;
+  }
+}
+  
+/** Meginmál og efni forsíðu **/
+  
+.content-wrapper {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat($columns, 1fr);
+  
+  > section {
+    grid-column: span $columns;
+    width: 100%;
+    padding: 1rem;
+  }
+}
+  
+@media (width >= 1000px) {
+  .content-wrapper > section {
+    grid-column: span 10;
+    width: 100%;
+    padding: 1rem;
+  }
+}
+  
+.introduction {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  
+  p {
+    grid-column: 1 / span 8;
+  }
+}
+  
+main {
+  grid-area: main;
+  grid-column: span $columns;
+  max-width: $max-width;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+  
+  h3 {
+    padding-bottom: $spacing;
+  }
+  
+  table img {
+    margin: 0;
+    width: 100%;
+    min-width: $min-width-image;
+  }
+  
+  ul {
+    list-style: none;
+  }
+}
+  
+/*** Inngangsefni á forsíðu ***/
+  
+.introduction img {
+  grid-column-start: 9;
+  max-width: $max-width-image;
+  min-width: $min-width-image;
+  border-radius: $border-radius-image;
+  margin-right: $spacing;
+}
+
+
+  
+/** Spilasíða, töflustílar **/
+@media (width <= 600px) {
+  th:nth-child(n+3),
+  td:nth-child(n+3) {
+    display: none;
+  }
+}
+  
+table {
+  border-collapse: collapse;
+  margin-bottom: calc($spacing * 2);
+  margin-top: calc($spacing * 2);
+}
+  
+thead {
+  background-color: $color-background-secondary;
+}
+  
+th {
+  padding: $spacing;
+  padding-top: calc($spacing * 0.5);
+  padding-bottom: calc($spacing * 0.5);
+  text-align: left;
+}
+  
+td {
+  padding: $spacing;
+}
+  
+tbody tr:nth-child(even) {
+  background-color: $color-background-secondary;
+}
+  
+tbody tr:nth-child(even) td:first-child {
+  border-top-left-radius: $border-radius-regular;
+  border-bottom-left-radius: $border-radius-regular;
+}
+
+tbody tr:nth-child(even) td:last-child {
+  border-top-right-radius: $border-radius-regular;
+  border-bottom-right-radius: $border-radius-regular;
+}
+  
+/** Viðburðir **/
+  
+/* TODO nota úr sýnilausn eða þinni lausn, ætti að einfaldast með því að endurnýta .cards og .card */
+  
+/** Skráningarform **/
+  
+form {
+  width: 100%;
+  
+  h3 {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: calc($spacing * 2);
+  }
+}
+  
+select {
+  display: block;
+  width: 100%;
+  height: calc($spacing * 2);
+  
+  option {
+    padding: calc($spacing * 3);
+  }
+}
+  
+form section li {
+  padding-bottom: $spacing;
+}
+  
+input {
+  display: flex;
+  width: 100%;
+  height: calc($spacing * 2);
+
+  &[type='checkbox'] {
+    width: auto;
+    height: auto;
+    display: inline-block;
+  }
+  
+  &[type='submit'] {
+    width: calc($spacing * 4);
+    height: calc($spacing * 2);
+    border-radius: $border-radius-regular;
+    background-color: $color-background-secondary;
+  }
+  
+  &[type='text'] {
+    height: calc($spacing * 3);
+  }
+}

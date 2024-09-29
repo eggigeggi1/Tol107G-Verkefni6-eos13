@@ -1,0 +1,45 @@
+@import 'config';
+  
+footer {
+  > .container {
+    max-width: $max-width;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat($columns, 1fr);
+  }
+  
+  grid-area: footer;
+  grid-column: span $columns;
+  width: 100%;
+  background-color: $color-background-secondary;
+  border-top: 4px solid $color-border-with-background;
+  
+  h2 {
+    padding: 1rem;
+    word-wrap: break-word;
+  }
+  
+  ul {
+    align-items: center;
+    list-style: none;
+  }
+  
+  section:first-of-type li:nth-child(even) {
+    padding-bottom: $spacing;
+  }
+}
+  
+/* Ef við notum section fyrir hvert svæði undir fót, þá er hægt að nota eftirfarandi */
+footer > .container > section {
+  grid-column: span $columns;
+  padding: $spacing;
+  text-align: center;
+  width: 100%;
+}
+
+@media (width >= 700px) {
+  footer > .container > section {
+    grid-column: span 4;
+  }
+}

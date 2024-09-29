@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "sass": "^1.79.3"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.3",
+    "concurrently": "^9.0.1",
+    "postcss-scss": "^4.0.9",
+    "stylelint": "^16.9.0",
+    "stylelint-config-sass-guidelines": "^12.1.0",
+    "stylelint-config-standard": "^36.0.1"
+  },
+  "name": "spilabudin",
+  "version": "1.0.0",
+  "description": "Heimasíða spilabúðarinnar",
+  "main": "index.js",
+  "scripts": {
+    "browser-sync": "browser-sync start --server --files *.html styles.css",
+    "sass": "sass styles/main.scss styles.css -w",
+    "dev": "concurrently \"npm run sass\" \"npm run browser-sync\"",
+    "lint": "stylelint styles/main.scss"
+  },
+  "author": "Eggert Örn Sigurðsson",
+  "license": "ISC"
+}
